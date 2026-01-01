@@ -14,14 +14,10 @@ void World::draw() {
     for (int y = 0; y < this->height; y++) {
         printf("|");
         for (int x = 0; x < this->width; x++) {
-            Organizm* o = znajdzOrganizm(x, y);
-            if (o != nullptr) o->rysowanie();
-            else std::cout << " ";
+            printf(" ");
         }
-        printf("|");
-        printf("\n");
+        printf("|\n");
     }
 
     for (int i = 0; i < this->width + 2; i++) std::cout << "-";
-    printf("\n");
 }

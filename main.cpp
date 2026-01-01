@@ -5,6 +5,7 @@
 using namespace std;
 
 int main() {
-    auto world = World(20, 20);
+    auto world = World(40, 10);
+    world.draw();
     return 0;
 }
