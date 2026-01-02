@@ -8,6 +8,7 @@
 class World {
     int width, height;
 
+
 public:
     World(int const width, int const height) {
         this->width = width;

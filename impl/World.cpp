@@ -20,4 +20,5 @@ void World::draw() {
     }
 
     for (int i = 0; i < this->width + 2; i++) std::cout << "-";
+    printf("\n");
 }
