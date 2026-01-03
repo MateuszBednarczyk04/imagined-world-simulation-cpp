@@ -7,5 +7,7 @@ add_executable(untitled main.cpp
         abstract/World.h
         impl/World.cpp
         abstract/Organism.h
-        impl/Organism.cpp
+        abstract/Animal.h
+        abstract/Plant.h
+        impl/Plant.cpp
 )
