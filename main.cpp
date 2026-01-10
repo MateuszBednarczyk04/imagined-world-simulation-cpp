@@ -1,8 +1,4 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <limits>
 
 #include "abstract/World.h"
 #include "abstract/Grass.h"
@@ -31,8 +27,10 @@ char get_char() {
 
 void initializeWorld(World *world, Human *player) {
     world->addOrganism(player);
-    world->addOrganism(new Fox(world, 0, 1));
     world->addOrganismRandomly(new CyberSheep(world, 0, 0));
+    world->addOrganismRandomly(new CyberSheep(world, 0, 0));
+    world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
+    world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
 
     for (int i = 0; i < 10; ++i) {
         world->addOrganismRandomly(new Wolf(world, 0, 0));
@@ -44,7 +42,6 @@ void initializeWorld(World *world, Human *player) {
         world->addOrganismRandomly(new Dandelion(world, 0, 0));
         world->addOrganismRandomly(new Guarana(world, 0, 0));
         world->addOrganismRandomly(new Belladonna(world, 0, 0));
-        world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
     }
 }
 

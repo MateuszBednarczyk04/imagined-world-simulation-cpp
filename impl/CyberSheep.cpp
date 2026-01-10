@@ -6,17 +6,15 @@
 #include "../abstract/World.h"
 #include "../abstract/SosnowskyHogweed.h"
 #include <vector>
-#include <cmath>
 #include <limits>
 
 void CyberSheep::action() {
-    Organism* closestHogweed = nullptr;
+    Organism *closestHogweed = nullptr;
     double minDistance = std::numeric_limits<double>::max();
 
-    // Find the closest Sosnowsky's Hogweed
-    for (Organism* org : world->getOrganisms()) {
-        if (dynamic_cast<SosnowskyHogweed*>(org)) {
-            double distance = std::sqrt(std::pow(org->getX() - this->x, 2) + std::pow(org->getY() - this->y, 2));
+    for (Organism *org: world->getOrganisms()) {
+        if (dynamic_cast<SosnowskyHogweed *>(org)) {
+            const double distance = std::sqrt(std::pow(org->getX() - this->x, 2) + std::pow(org->getY() - this->y, 2));
             if (distance < minDistance) {
                 minDistance = distance;
                 closestHogweed = org;
@@ -25,9 +23,8 @@ void CyberSheep::action() {
     }
 
     if (closestHogweed != nullptr) {
-        // Move towards the closest hogweed
-        int targetX = closestHogweed->getX();
-        int targetY = closestHogweed->getY();
+        const int targetX = closestHogweed->getX();
+        const int targetY = closestHogweed->getY();
         int newX = x;
         int newY = y;
 
@@ -37,34 +34,28 @@ void CyberSheep::action() {
         if (y < targetY) newY++;
         else if (y > targetY) newY--;
 
-        // Check for collision at the new position
-        Organism* other = world->getOrganismOnPosition(newX, newY);
-        if (other != nullptr && other != this) {
+        if (Organism *other = world->getOrganismOnPosition(newX, newY); other != nullptr && other != this) {
             solveCollision(other);
         } else {
-            x = newX;
-            y = newY;
+            world->moveOrganism(this, newX, newY);
         }
     } else {
-        // No hogweed on the map, behave like a normal animal
         Animal::action();
     }
 }
 
 void CyberSheep::solveCollision(Organism *other) {
-    if (dynamic_cast<SosnowskyHogweed*>(other)) {
-        // Eats the hogweed
+    if (dynamic_cast<SosnowskyHogweed *>(other)) {
+        const int targetX = other->getX();
+        const int targetY = other->getY();
         world->deleteOrganism(other);
-        // Move to its location
-        x = other->getX();
-        y = other->getY();
+        world->moveOrganism(this, targetX, targetY);
     } else {
-        // Default animal collision for other species
         Animal::solveCollision(other);
     }
 }
 
 void CyberSheep::createChild(int x, int y) {
-    CyberSheep* child = new CyberSheep(world, x, y, 0);
+    const auto child = new CyberSheep(world, x, y, 0);
     world->addOrganism(child);
 }

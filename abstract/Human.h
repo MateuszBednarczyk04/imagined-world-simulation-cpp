@@ -9,7 +9,6 @@
 #include <string>
 
 class Human : public Animal {
-private:
     int abilityCooldown;
     int abilityDuration;
 

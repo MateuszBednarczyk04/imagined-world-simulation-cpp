@@ -11,6 +11,5 @@ void Guarana::solveCollision(Organism *other) {
 }
 
 void Guarana::createChild(int x, int y) {
-    Guarana *child = new Guarana(world, x, y, 0);
-    world->addOrganism(child);
+    world->addOrganism(new Guarana(world, x, y, 0));
 }

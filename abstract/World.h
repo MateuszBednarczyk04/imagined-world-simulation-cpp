@@ -8,6 +8,8 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <array>
+#include <utility>
 #include "Organism.h"
 
 using namespace std;
@@ -21,6 +23,10 @@ class World {
     PlayerMove playerMove;
 
 public:
+    // --- NEW, IMPROVED STATIC CONSTANTS using std::array ---
+    static const std::array<std::pair<int, int>, 4> CARDINAL_DIRECTIONS;
+    static const std::array<std::pair<int, int>, 8> ALL_DIRECTIONS;
+
     World(int const width, int const height) {
         this->width = width;
         this->height = height;
@@ -54,7 +60,7 @@ public:
         return move;
     }
 
-    void render();
+    void render() const;
 
     void executeRound();
 
@@ -81,7 +87,7 @@ public:
 
     bool findFreeAdjacentSpot(int x, int y, int &outX, int &outY) const;
 
-    bool isOrganismAlive(Organism *organism) const;
+    bool isOrganismAlive(const Organism *organism) const;
 
     void addOrganism(Organism *organism) {
         this->organisms.push_back(organism);
@@ -110,7 +116,6 @@ public:
         grid[organism->getY()][organism->getX()] = nullptr;
         auto it = std::remove(this->organisms.begin(), this->organisms.end(), organism);
         this->organisms.erase(it, this->organisms.end());
-        // Note: The caller is responsible for deleting the organism object to free memory
     }
 
     void moveOrganism(Organism *organism, int newX, int newY) {

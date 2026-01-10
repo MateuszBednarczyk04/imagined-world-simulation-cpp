@@ -6,81 +6,92 @@
 #define UNTITLED_ANIMAL_H
 #include "Organism.h"
 #include "World.h"
-#include "Plant.h" // Include Plant header for dynamic_cast
-#include <cstdlib>
+#include "Plant.h"
 #include <typeinfo>
+#include <vector>
+#include <random>
 
 class Animal : public Organism {
+protected:
+    bool attackerAfterReflectionCantMove = false;
+
 public:
-    Animal(World* world, int strength, const string &asciiRepresentation, int x, int y, int initiative, int age)
+    Animal(World *world, int strength, const string &asciiRepresentation, int x, int y, int initiative, int age)
         : Organism(world, strength, asciiRepresentation, x, y, initiative, age) {
     }
 
     void action() override {
-        int oldX = x;
-        int oldY = y;
+        std::vector<pair<int, int> > possibleMoves;
+        for (const auto &dir: World::CARDINAL_DIRECTIONS) {
+            const int newX = x + dir.first;
+            const int newY = y + dir.second;
 
-        int dx = 0;
-        int dy = 0;
-        int direction = rand() % 4;
-
-        switch(direction) {
-            case 0: dy = -1; break; // Up
-            case 1: dy = 1; break;  // Down
-            case 2: dx = -1; break; // Left
-            case 3: dx = 1; break;  // Right
+            if (newX >= 0 && newX < world->getWidth() && newY >= 0 && newY < world->getHeight()) {
+                possibleMoves.push_back({newX, newY});
+            }
         }
 
-        int newX = x + dx;
-        int newY = y + dy;
+        if (possibleMoves.empty()) {
+            return;
+        }
 
-        if (newX >= 0 && newX < world->getWidth() && newY >= 0 && newY < world->getHeight()) {
-            Organism* other = world->getOrganismOnPosition(newX, newY);
-            if (other != nullptr && other != this) {
-                solveCollision(other);
-            } else {
-                world->moveOrganism(this, newX, newY);
-            }
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_int_distribution<> distrib(0, possibleMoves.size() - 1);
+        pair<int, int> chosenMove = possibleMoves[distrib(gen)];
+
+        const int finalX = chosenMove.first;
+        const int finalY = chosenMove.second;
+
+        if (Organism *target = world->getOrganismOnPosition(finalX, finalY); target != nullptr && target != this) {
+            solveCollision(target);
+        } else {
+            world->moveOrganism(this, finalX, finalY);
         }
     }
 
     void solveCollision(Organism *other) override {
-        // Case 1: Same species -> Reproduce
         if (typeid(*this) == typeid(*other)) {
-            int childX, childY;
-            if (world->findFreeAdjacentSpot(this->getX(), this->getY(), childX, childY)) {
+            if (int childX, childY; world->findFreeAdjacentSpot(this->getX(), this->getY(), childX, childY)) {
                 createChild(childX, childY);
-            }
-            else if (world->findFreeAdjacentSpot(other->getX(), other->getY(), childX, childY)) {
+            } else if (world->findFreeAdjacentSpot(other->getX(), other->getY(), childX, childY)) {
                 createChild(childX, childY);
             }
             return;
         }
 
-        // Case 2: The other organism is a Plant -> Eat it
-        if (dynamic_cast<Plant*>(other)) {
-            int plantX = other->getX();
-            int plantY = other->getY();
+        const int targetX = other->getX();
+        const int targetY = other->getY();
+
+        if (other->didReflectAttack(this)) {
+            if (world->getOrganismOnPosition(targetX, targetY) == nullptr) {
+                if (typeid(*other) == typeid(Animal) && dynamic_cast<Animal *>(other)->
+                    getAttackerAfterReflectionCantMove()) {
+                    return;
+                }
+                world->moveOrganism(this, targetX, targetY);
+            }
+            return;
+        }
+
+        if (dynamic_cast<Plant *>(other)) {
             other->solveCollision(this);
             if (world->isOrganismAlive(this)) {
-                 world->moveOrganism(this, plantX, plantY);
+                world->moveOrganism(this, targetX, targetY);
             }
-            return;
-        }
-
-        // Case 3: The other organism is an Animal -> Fight
-        if (other->didReflectAttack(this)) {
             return;
         }
 
         if (this->getStrength() >= other->getStrength()) {
-            int targetX = other->getX();
-            int targetY = other->getY();
             world->deleteOrganism(other);
             world->moveOrganism(this, targetX, targetY);
         } else {
             world->deleteOrganism(this);
         }
+    }
+
+    bool getAttackerAfterReflectionCantMove() const {
+        return this->attackerAfterReflectionCantMove;
     }
 };
 

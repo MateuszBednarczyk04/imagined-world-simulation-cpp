@@ -5,7 +5,6 @@
 #include "../abstract/Sheep.h"
 #include "../abstract/World.h"
 
-void Sheep::createChild(int x, int y) {
-    Sheep* child = new Sheep(world, x, y, 0);
-    world->addOrganism(child);
+void Sheep::createChild(const int x, const int y) {
+    world->addOrganism(new Sheep(world, x, y, 0));
 }

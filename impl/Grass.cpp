@@ -10,6 +10,5 @@ void Grass::action() {
 }
 
 void Grass::createChild(int x, int y) {
-    Grass* child = new Grass(world, x, y, 0);
-    world->addOrganism(child);
+    world->addOrganism(new Grass(world, x, y, 0));
 }

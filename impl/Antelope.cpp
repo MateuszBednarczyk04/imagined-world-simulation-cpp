@@ -5,56 +5,49 @@
 #include "../abstract/Antelope.h"
 #include "../abstract/World.h"
 
+const int chanceOfAttackReflection = 2; // 50%
+
 void Antelope::action() {
     int dx = 0;
     int dy = 0;
 
-    do {
-        dx = (rand() % 5) - 2;
-        dy = (rand() % 5) - 2;
-    } while (dx == 0 && dy == 0);
+    switch (rand() % 4) {
+        case 0: dy = -2;
+            break;
+        case 1: dy = 2;
+            break;
+        case 2: dx = -2;
+            break;
+        case 3: dx = 2;
+            break;
+    }
 
-
-    int newX = x + dx;
-    int newY = y + dy;
+    const int newX = x + dx;
+    const int newY = y + dy;
 
     if (newX >= 0 && newX < world->getWidth() && newY >= 0 && newY < world->getHeight()) {
-        Organism* other = world->getOrganismOnPosition(newX, newY);
-        if (other != nullptr && other != this) {
+        if (Organism *other = world->getOrganismOnPosition(newX, newY); other != nullptr) {
             solveCollision(other);
         } else {
-            x = newX;
-            y = newY;
+            world->moveOrganism(this, newX, newY);
         }
     }
 }
 
 void Antelope::solveCollision(Organism *other) {
-    if (typeid(*this) != typeid(*other) && (rand() % 2 == 0)) {
-        int newX, newY;
-        if (world->findFreeAdjacentSpot(this->getX(), this->getY(), newX, newY)) {
-            this->setX(newX);
-            this->setY(newY);
-            return;
-        }
-    }
-
     Animal::solveCollision(other);
 }
 
 bool Antelope::didReflectAttack(Organism *attacker) {
-    if (rand() % 2 == 0) {
-        int newX, newY;
-        if (world->findFreeAdjacentSpot(x, y, newX, newY)) {
-            this->setX(newX);
-            this->setY(newY);
+    if (rand() % chanceOfAttackReflection == 0) {
+        if (int newX, newY; world->findFreeAdjacentSpot(x, y, newX, newY)) {
+            world->moveOrganism(this, newX, newY);
             return true;
         }
     }
     return false;
 }
 
-void Antelope::createChild(int x, int y) {
-    Antelope* child = new Antelope(world, x, y, 0);
-    world->addOrganism(child);
+void Antelope::createChild(const int x, const int y) {
+    world->addOrganism(new Antelope(world, x, y, 0));
 }

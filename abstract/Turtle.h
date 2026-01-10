@@ -11,6 +11,7 @@ class Turtle : public Animal {
 public:
     Turtle(World* world, int x, int y, int age = 0)
         : Animal(world, 2, "T", x, y, 1, age) {
+        this->attackerAfterReflectionCantMove = true;
     }
 
     void action() override;

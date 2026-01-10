@@ -45,7 +45,6 @@ public:
 
     virtual void createChild(int x, int y) = 0;
 
-    // Returns true if the attack was deflected/escaped
     virtual bool didReflectAttack(Organism *attacker) {
         return false;
     }
@@ -80,6 +79,10 @@ public:
 
     int getAge() const {
         return this->age;
+    }
+
+    void incrementAge() {
+        this->age++;
     }
 };
 

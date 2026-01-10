@@ -5,7 +5,6 @@
 #include "../abstract/Wolf.h"
 #include "../abstract/World.h"
 
-void Wolf::createChild(int x, int y) {
-    Wolf* child = new Wolf(world, x, y, 0);
-    world->addOrganism(child);
+void Wolf::createChild(const int x, const int y) {
+    world->addOrganism(new Wolf(world, x, y, 0));
 }

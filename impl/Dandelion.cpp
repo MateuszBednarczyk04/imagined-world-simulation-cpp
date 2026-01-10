@@ -12,6 +12,6 @@ void Dandelion::action() {
     }
 }
 
-void Dandelion::createChild(int x, int y) {
+void Dandelion::createChild(const int x, const int y) {
     world->addOrganism(new Dandelion(world, x, y));
 }
