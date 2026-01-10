@@ -31,8 +31,7 @@ void Human::action() {
         if (other != nullptr && other != this) {
             solveCollision(other);
         } else {
-            x = newX;
-            y = newY;
+            world->moveOrganism(this, newX, newY);
         }
     }
 }
@@ -42,8 +41,7 @@ void Human::solveCollision(Organism *other) {
     if (abilityDuration > 0 && other->getStrength() > this->getStrength()) {
         int newX, newY;
         if (world->findFreeAdjacentSpot(this->getX(), this->getY(), newX, newY)) {
-            this->setX(newX);
-            this->setY(newY);
+            world->moveOrganism(this, newX, newY);
         }
         return; // Attack is cancelled by escaping.
     }
@@ -57,8 +55,7 @@ bool Human::didReflectAttack(Organism *attacker) {
     if (abilityDuration > 0 && attacker->getStrength() > this->getStrength()) {
         int newX, newY;
         if (world->findFreeAdjacentSpot(this->getX(), this->getY(), newX, newY)) {
-            this->setX(newX);
-            this->setY(newY);
+            world->moveOrganism(this, newX, newY);
         }
         return true; // "Reflect" the attack by escaping.
     }

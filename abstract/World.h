@@ -17,6 +17,7 @@ enum class PlayerMove { NONE, UP, DOWN, LEFT, RIGHT, ABILITY };
 class World {
     int width, height;
     vector<Organism *> organisms;
+    vector<vector<Organism *>> grid; // Optimization: Grid for O(1) access
     PlayerMove playerMove;
 
 public:
@@ -25,6 +26,8 @@ public:
         this->height = height;
         this->organisms = {};
         this->playerMove = PlayerMove::NONE;
+        // Initialize grid
+        grid.resize(height, vector<Organism *>(width, nullptr));
     }
 
     virtual ~World() = default;
@@ -64,17 +67,16 @@ public:
         });
     }
 
-    bool isCollision(const int x, const int y) const {
-        return this->getOrganismOnPosition(x, y) != nullptr;
+    // O(1) implementation
+    Organism *getOrganismOnPosition(const int x, const int y) const {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            return nullptr;
+        }
+        return grid[y][x];
     }
 
-    Organism *getOrganismOnPosition(const int x, const int y) const {
-        for (const auto organism: this->organisms) {
-            if (organism->getX() == x && organism->getY() == y) {
-                return organism;
-            }
-        }
-        return nullptr;
+    bool isCollision(const int x, const int y) const {
+        return getOrganismOnPosition(x, y) != nullptr;
     }
 
     bool findFreeAdjacentSpot(int x, int y, int& outX, int& outY) const;
@@ -83,6 +85,7 @@ public:
 
     void addOrganism(Organism *organism) {
         this->organisms.push_back(organism);
+        grid[organism->getY()][organism->getX()] = organism;
     }
 
     void addOrganismRandomly(Organism *organism) {
@@ -103,8 +106,18 @@ public:
     }
 
     void deleteOrganism(Organism *organism) {
+        if (organism == nullptr) return;
+        grid[organism->getY()][organism->getX()] = nullptr;
         auto it = std::remove(this->organisms.begin(), this->organisms.end(), organism);
         this->organisms.erase(it, this->organisms.end());
+        // Note: The caller is responsible for deleting the organism object to free memory
+    }
+
+    void moveOrganism(Organism* organism, int newX, int newY) {
+        grid[organism->getY()][organism->getX()] = nullptr;
+        grid[newY][newX] = organism;
+        organism->setX(newX);
+        organism->setY(newY);
     }
 };
 

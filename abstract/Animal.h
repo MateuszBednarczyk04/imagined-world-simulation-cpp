@@ -39,8 +39,7 @@ public:
             if (other != nullptr && other != this) {
                 solveCollision(other);
             } else {
-                x = newX;
-                y = newY;
+                world->moveOrganism(this, newX, newY);
             }
         }
     }
@@ -64,8 +63,7 @@ public:
             int plantY = other->getY();
             other->solveCollision(this);
             if (world->isOrganismAlive(this)) {
-                 this->setX(plantX);
-                 this->setY(plantY);
+                 world->moveOrganism(this, plantX, plantY);
             }
             return;
         }
@@ -79,8 +77,7 @@ public:
             int targetX = other->getX();
             int targetY = other->getY();
             world->deleteOrganism(other);
-            this->setX(targetX);
-            this->setY(targetY);
+            world->moveOrganism(this, targetX, targetY);
         } else {
             world->deleteOrganism(this);
         }
