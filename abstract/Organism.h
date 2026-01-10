@@ -9,19 +9,24 @@
 
 using namespace std;
 
+class World;
+
 class Organism {
+protected:
     int strength;
     string asciiRepresentation;
     int x;
     int y;
     int initiative;
     int age;
+    World* world;
 
 public:
     virtual ~Organism() = default;
 
-    Organism(const int strength, const string &asciiRepresentation, const int x, const int y, const int initiative,
+    Organism(World* world, const int strength, const string &asciiRepresentation, const int x, const int y, const int initiative,
              const int age) {
+        this->world = world;
         this->strength = strength;
         this->asciiRepresentation = asciiRepresentation;
         this->x = x;
@@ -36,7 +41,14 @@ public:
 
     virtual void action() = 0;
 
-    virtual void solveCollision(const Organism *other) = 0;
+    virtual void solveCollision(Organism *other) = 0;
+
+    virtual void createChild(int x, int y) = 0;
+
+    // Returns true if the attack was deflected/escaped
+    virtual bool didReflectAttack(Organism *attacker) {
+        return false;
+    }
 
     int getX() const {
         return this->x;
@@ -46,8 +58,24 @@ public:
         return this->y;
     }
 
+    void setX(int x) {
+        this->x = x;
+    }
+
+    void setY(int y) {
+        this->y = y;
+    }
+
     int getInitiative() const {
         return this->initiative;
+    }
+
+    int getStrength() const {
+        return this->strength;
+    }
+
+    void addStrength(const int amount) {
+        this->strength += amount;
     }
 
     int getAge() const {

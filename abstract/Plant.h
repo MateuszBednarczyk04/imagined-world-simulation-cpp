@@ -1,20 +1,16 @@
-//
-// Created by Mateusz Bednarczyk on 03/01/2026.
-//
-
 #ifndef UNTITLED_PLANT_H
 #define UNTITLED_PLANT_H
+
 #include "Organism.h"
 
 class Plant : public Organism {
+protected:
+    static constexpr double SPREAD_PROBABILITY = 0.1;
 public:
-    Plant(int strength, const string &asciiRepresentation, int x, int y, int initiative, int age)
-        : Organism(strength, asciiRepresentation, x, y, initiative, age) {
-    }
+    using Organism::Organism;
 
     void action() override;
-
-    void solveCollision(const Organism *other) override;
+    void solveCollision(Organism* attacker) override;
 };
 
 #endif //UNTITLED_PLANT_H
