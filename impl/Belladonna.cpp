@@ -13,6 +13,5 @@ void Belladonna::solveCollision(Organism *other) {
 }
 
 void Belladonna::createChild(int x, int y) {
-    Belladonna* child = new Belladonna(world, x, y, 0);
-    world->addOrganism(child);
+    world->addOrganism(new Belladonna(world, x, y, 0));
 }

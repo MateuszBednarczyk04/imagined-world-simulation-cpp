@@ -17,7 +17,7 @@ enum class PlayerMove { NONE, UP, DOWN, LEFT, RIGHT, ABILITY };
 class World {
     int width, height;
     vector<Organism *> organisms;
-    vector<vector<Organism *>> grid; // Optimization: Grid for O(1) access
+    vector<vector<Organism *> > grid; // Optimization: Grid for O(1) access
     PlayerMove playerMove;
 
 public:
@@ -40,7 +40,7 @@ public:
         return height;
     }
 
-    const vector<Organism *>& getOrganisms() const {
+    const vector<Organism *> &getOrganisms() const {
         return organisms;
     }
 
@@ -79,9 +79,9 @@ public:
         return getOrganismOnPosition(x, y) != nullptr;
     }
 
-    bool findFreeAdjacentSpot(int x, int y, int& outX, int& outY) const;
+    bool findFreeAdjacentSpot(int x, int y, int &outX, int &outY) const;
 
-    bool isOrganismAlive(Organism* organism) const;
+    bool isOrganismAlive(Organism *organism) const;
 
     void addOrganism(Organism *organism) {
         this->organisms.push_back(organism);
@@ -113,7 +113,7 @@ public:
         // Note: The caller is responsible for deleting the organism object to free memory
     }
 
-    void moveOrganism(Organism* organism, int newX, int newY) {
+    void moveOrganism(Organism *organism, int newX, int newY) {
         grid[organism->getY()][organism->getX()] = nullptr;
         grid[newY][newX] = organism;
         organism->setX(newX);

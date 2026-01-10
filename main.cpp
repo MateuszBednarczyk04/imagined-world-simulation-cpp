@@ -30,7 +30,8 @@ char get_char() {
 }
 
 void initializeWorld(World *world, Human *player) {
-    world->addOrganismRandomly(player);
+    world->addOrganism(player);
+    world->addOrganism(new Fox(world, 0, 1));
     world->addOrganismRandomly(new CyberSheep(world, 0, 0));
 
     for (int i = 0; i < 10; ++i) {
@@ -47,7 +48,6 @@ void initializeWorld(World *world, Human *player) {
     }
 }
 
-
 int main() {
     srand(time(nullptr));
     auto world = World(60, 40);
@@ -58,11 +58,12 @@ int main() {
 
     while (true) {
         printf("\033[2J\033[H"); // Clear screen
-        cout << "Mateusz Bednarczyk, sXXXXXX" << endl;
+        printf("Mateusz Bednarczyk, sXXXXXX\n");
         world.render();
-        cout << "Player Strength: " << player->getStrength() << " | Turn: " << round << endl;
-        cout << player->getAbilityStatus() << endl;
-        cout << "Move (w/a/s/d), activate ability (p), or quit (q): ";
+        printf("Player alive: %s | ", world.isOrganismAlive(player) ? "true" : "false");
+        printf("Player Strength: %d | Turn: %d\n", player->getStrength(), round);
+        printf("%s\n", player->getAbilityStatus().c_str());
+        printf("Move (w/a/s/d), activate ability (p), or quit (q): ");
 
         const char input = get_char();
         auto move = PlayerMove::NONE;

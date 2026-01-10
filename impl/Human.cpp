@@ -27,8 +27,7 @@ void Human::action() {
     int newY = y + dy;
 
     if (newX >= 0 && newX < world->getWidth() && newY >= 0 && newY < world->getHeight()) {
-        Organism* other = world->getOrganismOnPosition(newX, newY);
-        if (other != nullptr && other != this) {
+        if (Organism* other = world->getOrganismOnPosition(newX, newY); other != nullptr && other != this) {
             solveCollision(other);
         } else {
             world->moveOrganism(this, newX, newY);
