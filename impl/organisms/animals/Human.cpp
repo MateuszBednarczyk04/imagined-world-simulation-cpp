@@ -2,9 +2,11 @@
 // Created by Mateusz Bednarczyk on 05/01/2026.
 //
 
-#include "../abstract/Human.h"
-#include "../abstract/World.h"
+#include "organisms/animals/Human.h"
+
 #include <sstream>
+
+#include "World.h"
 
 void Human::action() {
     const PlayerMove move = world->getPlayerMove();

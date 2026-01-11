@@ -1,37 +1,17 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.21)
 project(untitled)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# Create the executable target
 add_executable(untitled main.cpp
-        abstract/World.h
-        impl/World.cpp
-        abstract/Organism.h
-        abstract/Animal.h
-        abstract/Plant.h
-        impl/Plant.cpp
-        abstract/Antelope.h
-        impl/Antelope.cpp
-        abstract/SosnowskyHogweed.h
-        impl/SosnowskyHogweed.cpp
-        abstract/CyberSheep.h
-        impl/CyberSheep.cpp
-        abstract/Grass.h
-        impl/Grass.cpp
-        abstract/Wolf.h
-        impl/Wolf.cpp
-        abstract/Sheep.h
-        impl/Sheep.cpp
-        abstract/Fox.h
-        impl/Fox.cpp
-        abstract/Turtle.h
-        impl/Turtle.cpp
-        abstract/Dandelion.h
-        impl/Dandelion.cpp
-        abstract/Guarana.h
-        impl/Guarana.cpp
-        abstract/Belladonna.h
-        impl/Belladonna.cpp
-        abstract/Human.h
-        impl/Human.cpp
-)
+        impl/organisms/animals/Animal.cpp)
+
+# Add the 'abstract' directory to the include path for our target
+target_include_directories(untitled PUBLIC abstract)
+
+# Use GLOB_RECURSE to find all .cpp files in the 'impl' directory and its subdirectories
+file(GLOB_RECURSE IMPL_SOURCES "impl/*.cpp")
+
+# Add the found source files to our executable target
+target_sources(untitled PRIVATE ${IMPL_SOURCES})

@@ -2,8 +2,9 @@
 // Created by Mateusz Bednarczyk on 05/01/2026.
 //
 
-#include "../abstract/Fox.h"
-#include "../abstract/World.h"
+#include "organisms/animals/Fox.h"
+
+#include "../../../abstract/World.h"
 #include <vector>
 #include <random>
 

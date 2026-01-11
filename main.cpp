@@ -1,19 +1,19 @@
 #include <iostream>
 
-#include "abstract/World.h"
-#include "abstract/Grass.h"
-#include "abstract/Dandelion.h"
-#include "abstract/Guarana.h"
-#include "abstract/Belladonna.h"
-#include "abstract/SosnowskyHogweed.h"
+#include "World.h"
+#include "organisms/plants/Grass.h"
+#include "organisms/plants/Dandelion.h"
+#include "organisms/plants/Guarana.h"
+#include "organisms/plants/Belladonna.h"
+#include "organisms/plants/SosnowskyHogweed.h"
 
-#include "abstract/Wolf.h"
-#include "abstract/Sheep.h"
-#include "abstract/Fox.h"
-#include "abstract/Turtle.h"
-#include "abstract/Antelope.h"
-#include "abstract/CyberSheep.h"
-#include "abstract/Human.h"
+#include "organisms/animals/Wolf.h"
+#include "organisms/animals/Sheep.h"
+#include "organisms/animals/Fox.h"
+#include "organisms/animals/Turtle.h"
+#include "organisms/animals/Antelope.h"
+#include "organisms/animals/CyberSheep.h"
+#include "organisms/animals/Human.h"
 
 
 using namespace std;
