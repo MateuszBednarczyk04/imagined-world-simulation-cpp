@@ -19,12 +19,13 @@ protected:
     int y;
     int initiative;
     int age;
-    World* world;
+    World *world;
 
 public:
     virtual ~Organism() = default;
 
-    Organism(World* world, const int strength, const string &asciiRepresentation, const int x, const int y, const int initiative,
+    Organism(World *world, const int strength, const string &asciiRepresentation, const int x, const int y,
+             const int initiative,
              const int age) {
         this->world = world;
         this->strength = strength;

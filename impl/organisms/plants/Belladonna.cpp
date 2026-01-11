@@ -2,8 +2,8 @@
 // Created by Mateusz Bednarczyk on 05/01/2026.
 //
 
-#include "../abstract/Belladonna.h"
-#include "../abstract/World.h"
+#include "organisms/plants/Belladonna.h"
+#include "../../../abstract/World.h"
 
 void Belladonna::solveCollision(Organism *other) {
     world->deleteOrganism(other);

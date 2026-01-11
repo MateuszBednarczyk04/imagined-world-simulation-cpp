@@ -2,8 +2,9 @@
 // Created by Mateusz Bednarczyk on 05/01/2026.
 //
 
-#include "../abstract/Guarana.h"
-#include "../abstract/World.h"
+#include "organisms/plants/Guarana.h"
+
+#include "../../../abstract/World.h"
 
 void Guarana::solveCollision(Organism *other) {
     other->addStrength(3);

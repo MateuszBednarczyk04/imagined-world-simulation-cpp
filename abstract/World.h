@@ -10,7 +10,7 @@
 #include <random>
 #include <array>
 #include <utility>
-#include "Organism.h"
+#include "organisms/Organism.h"
 
 using namespace std;
 

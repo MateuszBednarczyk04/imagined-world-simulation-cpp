@@ -1,7 +1,9 @@
 #ifndef UNTITLED_PLANT_H
 #define UNTITLED_PLANT_H
 
-#include "Organism.h"
+#include "../Organism.h"
+
+class Organism; // Forward declaration
 
 class Plant : public Organism {
 protected:

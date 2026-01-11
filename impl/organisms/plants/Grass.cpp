@@ -2,8 +2,9 @@
 // Created by Mateusz Bednarczyk on 04/01/2026.
 //
 
-#include "../abstract/Grass.h"
-#include "../abstract/World.h"
+#include "organisms/plants/Grass.h"
+
+#include "../../../abstract/World.h"
 
 void Grass::action() {
     // Grass does nothing in its turn, as per specification.

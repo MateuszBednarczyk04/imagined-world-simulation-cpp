@@ -2,11 +2,13 @@
 // Created by Mateusz Bednarczyk on 04/01/2026.
 //
 
-#include "../abstract/CyberSheep.h"
-#include "../abstract/World.h"
-#include "../abstract/SosnowskyHogweed.h"
+#include "organisms/animals/CyberSheep.h"
+
+#include "../../../abstract/World.h"
 #include <vector>
 #include <limits>
+
+#include "organisms/plants/SosnowskyHogweed.h"
 
 void CyberSheep::action() {
     Organism *closestHogweed = nullptr;

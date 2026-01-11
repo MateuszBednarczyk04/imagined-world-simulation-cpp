@@ -2,8 +2,10 @@
 // Created by Mateusz Bednarczyk on 05/01/2026.
 //
 
-#include "../abstract/Turtle.h"
-#include "../abstract/World.h"
+#include "organisms/animals/Turtle.h"
+
+#include "../../../abstract/World.h"
+#include "organisms/animals/Animal.h"
 
 void Turtle::action() {
     if ((rand() % 4) < 3) {

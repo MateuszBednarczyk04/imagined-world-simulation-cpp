@@ -2,8 +2,9 @@
 // Created by Mateusz Bednarczyk on 03/01/2026.
 //
 
-#include "../abstract/Antelope.h"
-#include "../abstract/World.h"
+#include "organisms/animals/Antelope.h"
+
+#include "../../../abstract/World.h"
 
 const int chanceOfAttackReflection = 2; // 50%
 

@@ -2,10 +2,10 @@
 // Created by Mateusz Bednarczyk on 04/01/2026.
 //
 
-#include "../abstract/SosnowskyHogweed.h"
-#include "../abstract/World.h"
-#include "../abstract/Animal.h"
-#include "../abstract/CyberSheep.h"
+#include "organisms/plants/SosnowskyHogweed.h"
+
+#include "../../../abstract/World.h"
+#include "organisms/animals/CyberSheep.h"
 
 void SosnowskyHogweed::action() {
     for (int dx = -1; dx <= 1; ++dx) {
