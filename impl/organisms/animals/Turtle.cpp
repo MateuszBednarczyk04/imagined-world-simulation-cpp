@@ -3,7 +3,6 @@
 //
 
 #include "organisms/animals/Turtle.h"
-
 #include "../../../abstract/World.h"
 #include "organisms/animals/Animal.h"
 

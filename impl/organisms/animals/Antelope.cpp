@@ -3,7 +3,6 @@
 //
 
 #include "organisms/animals/Antelope.h"
-
 #include "../../../abstract/World.h"
 
 const int chanceOfAttackReflection = 2; // 50%

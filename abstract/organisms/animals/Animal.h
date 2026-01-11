@@ -7,8 +7,6 @@
 
 #include <string>
 #include <vector>
-#include <random>
-#include <typeinfo>
 #include "../Organism.h"
 
 class World; // Forward declaration

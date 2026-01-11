@@ -3,7 +3,6 @@
 //
 
 #include "organisms/animals/Sheep.h"
-
 #include "../../../abstract/World.h"
 
 void Sheep::createChild(const int x, const int y) {

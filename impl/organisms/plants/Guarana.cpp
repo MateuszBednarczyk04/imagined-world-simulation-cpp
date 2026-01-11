@@ -3,7 +3,6 @@
 //
 
 #include "organisms/plants/Guarana.h"
-
 #include "../../../abstract/World.h"
 
 void Guarana::solveCollision(Organism *other) {

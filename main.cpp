@@ -27,12 +27,12 @@ char get_char() {
 
 void initializeWorld(World *world, Human *player) {
     world->addOrganism(player);
-    world->addOrganismRandomly(new CyberSheep(world, 0, 0));
-    world->addOrganismRandomly(new CyberSheep(world, 0, 0));
-    world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
-    world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
 
     for (int i = 0; i < 10; ++i) {
+        world->addOrganismRandomly(new CyberSheep(world, 0, 0));
+        world->addOrganismRandomly(new CyberSheep(world, 0, 0));
+        world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
+        world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
         world->addOrganismRandomly(new Wolf(world, 0, 0));
         world->addOrganismRandomly(new Sheep(world, 0, 0));
         world->addOrganismRandomly(new Fox(world, 0, 0));

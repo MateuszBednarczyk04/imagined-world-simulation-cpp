@@ -3,20 +3,20 @@
 //
 
 #include "organisms/animals/CyberSheep.h"
-
 #include "../../../abstract/World.h"
 #include <vector>
 #include <limits>
-
 #include "organisms/plants/SosnowskyHogweed.h"
+
+using namespace std;
 
 void CyberSheep::action() {
     Organism *closestHogweed = nullptr;
-    double minDistance = std::numeric_limits<double>::max();
+    double minDistance = numeric_limits<double>::max();
 
     for (Organism *org: world->getOrganisms()) {
         if (dynamic_cast<SosnowskyHogweed *>(org)) {
-            const double distance = std::sqrt(std::pow(org->getX() - this->x, 2) + std::pow(org->getY() - this->y, 2));
+            const double distance = sqrt(pow(org->getX() - this->x, 2) + pow(org->getY() - this->y, 2));
             if (distance < minDistance) {
                 minDistance = distance;
                 closestHogweed = org;

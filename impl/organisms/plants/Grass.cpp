@@ -3,7 +3,6 @@
 //
 
 #include "organisms/plants/Grass.h"
-
 #include "../../../abstract/World.h"
 
 void Grass::action() {

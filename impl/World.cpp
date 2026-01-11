@@ -11,8 +11,8 @@
 
 using namespace std;
 
-const std::array<std::pair<int, int>, 4> World::CARDINAL_DIRECTIONS = {{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}};
-const std::array<std::pair<int, int>, 8> World::ALL_DIRECTIONS = {
+const array<pair<int, int>, 4> World::CARDINAL_DIRECTIONS = {{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}};
+const array<pair<int, int>, 8> World::ALL_DIRECTIONS = {
     {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}}
 };
 

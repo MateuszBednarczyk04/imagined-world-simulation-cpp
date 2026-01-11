@@ -3,13 +3,14 @@
 //
 
 #include "organisms/animals/Fox.h"
-
 #include "../../../abstract/World.h"
 #include <vector>
 #include <random>
 
+using namespace std;
+
 void Fox::action() {
-    std::vector<pair<int, int> > possibleMoves;
+    vector<pair<int, int> > possibleMoves;
 
     for (auto &dir: World::CARDINAL_DIRECTIONS) {
         const int newX = x + dir.first;

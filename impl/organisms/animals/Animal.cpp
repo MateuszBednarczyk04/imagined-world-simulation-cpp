@@ -2,13 +2,17 @@
 // Created by Mateusz Bednarczyk on 10/01/2026.
 //
 
+#include <random>
+#include <vector>
 #include "organisms/animals/Animal.h"
 #include "World.h"
 #include "organisms/plants/Plant.h"
 #include "organisms/animals/Turtle.h"
 
+using namespace std;
+
 void Animal::action() {
-    std::vector<std::pair<int, int>> possibleMoves;
+    vector<pair<int, int>> possibleMoves;
     for (const auto& dir : World::CARDINAL_DIRECTIONS) {
         int newX = x + dir.first;
         int newY = y + dir.second;
@@ -22,10 +26,10 @@ void Animal::action() {
         return;
     }
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> distrib(0, possibleMoves.size() - 1);
-    std::pair<int, int> chosenMove = possibleMoves[distrib(gen)];
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distrib(0, possibleMoves.size() - 1);
+    pair<int, int> chosenMove = possibleMoves[distrib(gen)];
 
     int finalX = chosenMove.first;
     int finalY = chosenMove.second;

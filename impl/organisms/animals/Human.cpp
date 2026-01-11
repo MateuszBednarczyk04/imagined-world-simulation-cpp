@@ -3,10 +3,10 @@
 //
 
 #include "organisms/animals/Human.h"
-
 #include <sstream>
-
 #include "World.h"
+
+using namespace std;
 
 void Human::action() {
     const PlayerMove move = world->getPlayerMove();
@@ -72,8 +72,8 @@ void Human::activateAbility() {
     }
 }
 
-std::string Human::getAbilityStatus() const {
-    std::stringstream ss;
+string Human::getAbilityStatus() const {
+    stringstream ss;
     ss << "Ability (Immortality): ";
     if (abilityDuration > 0) {
         ss << "ACTIVE for " << abilityDuration << " more turns.";

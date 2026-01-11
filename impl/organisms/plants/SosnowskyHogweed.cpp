@@ -3,7 +3,6 @@
 //
 
 #include "organisms/plants/SosnowskyHogweed.h"
-
 #include "../../../abstract/World.h"
 #include "organisms/animals/CyberSheep.h"
 
