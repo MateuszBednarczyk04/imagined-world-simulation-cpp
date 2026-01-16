@@ -14,7 +14,7 @@
 
 using namespace std;
 
-enum class PlayerMove { NONE, UP, DOWN, LEFT, RIGHT, ABILITY };
+enum class PlayerMove { NONE, UP, DOWN, LEFT, RIGHT, ABILITY, NEXT_ROUND };
 
 class World {
     int width, height;
@@ -95,20 +95,31 @@ public:
     }
 
     void addOrganismRandomly(Organism *organism) {
+        if (organisms.size() >= width * height) {
+            delete organism;
+            return;
+        }
+
         random_device rd;
         mt19937 gen(rd());
         uniform_int_distribution<> distribX(0, this->width - 1);
         uniform_int_distribution<> distribY(0, this->height - 1);
 
         int x, y;
+        int attempts = 0;
         do {
             x = distribX(gen);
             y = distribY(gen);
-        } while (isCollision(x, y));
+            attempts++;
+        } while (isCollision(x, y) && attempts < 200);
 
-        organism->setX(x);
-        organism->setY(y);
-        this->addOrganism(organism);
+        if (!isCollision(x, y)) {
+            organism->setX(x);
+            organism->setY(y);
+            this->addOrganism(organism);
+        } else {
+            delete organism;
+        }
     }
 
     void deleteOrganism(Organism *organism) {

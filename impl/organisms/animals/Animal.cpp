@@ -12,8 +12,8 @@
 using namespace std;
 
 void Animal::action() {
-    vector<pair<int, int>> possibleMoves;
-    for (const auto& dir : World::CARDINAL_DIRECTIONS) {
+    vector<pair<int, int> > possibleMoves;
+    for (const auto &dir: World::CARDINAL_DIRECTIONS) {
         int newX = x + dir.first;
         int newY = y + dir.second;
 
@@ -34,7 +34,7 @@ void Animal::action() {
     int finalX = chosenMove.first;
     int finalY = chosenMove.second;
 
-    Organism* target = world->getOrganismOnPosition(finalX, finalY);
+    Organism *target = world->getOrganismOnPosition(finalX, finalY);
 
     if (target != nullptr && target != this) {
         solveCollision(target);
@@ -44,13 +44,11 @@ void Animal::action() {
 }
 
 void Animal::solveCollision(Organism *other) {
-    // Case 1: Same species -> Reproduce
     if (typeid(*this) == typeid(*other)) {
         int childX, childY;
         if (world->findFreeAdjacentSpot(this->getX(), this->getY(), childX, childY)) {
             createChild(childX, childY);
-        }
-        else if (world->findFreeAdjacentSpot(other->getX(), other->getY(), childX, childY)) {
+        } else if (world->findFreeAdjacentSpot(other->getX(), other->getY(), childX, childY)) {
             createChild(childX, childY);
         }
         return;
@@ -59,10 +57,8 @@ void Animal::solveCollision(Organism *other) {
     int targetX = other->getX();
     int targetY = other->getY();
 
-    // Case 2: The other organism tries to escape or reflect the attack.
     if (other->didReflectAttack(this)) {
-        // Special case for Turtle: The attacker is always repelled and must return to its previous tile.
-        if (dynamic_cast<Turtle*>(other)) {
+        if (other->getAttackerAfterReflectionCantMove()) {
             return;
         }
 
@@ -73,16 +69,14 @@ void Animal::solveCollision(Organism *other) {
         return;
     }
 
-    // Case 3: The other organism is a Plant -> Eat it
-    if (dynamic_cast<Plant*>(other)) {
+    if (dynamic_cast<Plant *>(other)) {
         other->solveCollision(this);
         if (world->isOrganismAlive(this)) {
-             world->moveOrganism(this, targetX, targetY);
+            world->moveOrganism(this, targetX, targetY);
         }
         return;
     }
 
-    // Case 4: The other organism is an Animal -> Fight
     if (this->getStrength() >= other->getStrength()) {
         world->deleteOrganism(other);
         world->moveOrganism(this, targetX, targetY);

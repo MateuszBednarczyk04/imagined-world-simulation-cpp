@@ -20,6 +20,7 @@ protected:
     int initiative;
     int age;
     World *world;
+    bool attackerAfterReflectionCantMove = false;
 
 public:
     virtual ~Organism() = default;
@@ -84,6 +85,10 @@ public:
 
     void incrementAge() {
         this->age++;
+    }
+
+    bool getAttackerAfterReflectionCantMove() const {
+        return this->attackerAfterReflectionCantMove;
     }
 };
 

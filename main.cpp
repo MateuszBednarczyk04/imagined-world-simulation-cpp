@@ -28,26 +28,37 @@ char get_char() {
 void initializeWorld(World *world, Human *player) {
     world->addOrganism(player);
 
-    for (int i = 0; i < 10; ++i) {
-        world->addOrganismRandomly(new CyberSheep(world, 0, 0));
-        world->addOrganismRandomly(new CyberSheep(world, 0, 0));
-        world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
-        world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0));
-        world->addOrganismRandomly(new Wolf(world, 0, 0));
-        world->addOrganismRandomly(new Sheep(world, 0, 0));
-        world->addOrganismRandomly(new Fox(world, 0, 0));
-        world->addOrganismRandomly(new Turtle(world, 0, 0));
-        world->addOrganismRandomly(new Antelope(world, 0, 0));
-        world->addOrganismRandomly(new Grass(world, 0, 0));
-        world->addOrganismRandomly(new Dandelion(world, 0, 0));
-        world->addOrganismRandomly(new Guarana(world, 0, 0));
-        world->addOrganismRandomly(new Belladonna(world, 0, 0));
+    int initialOrganismCount = (world->getWidth() * world->getHeight()) / 5; // Fill ~20% of the map
+    if (initialOrganismCount < 10) initialOrganismCount = 10; // Minimum count
+
+    for (int i = 0; i < initialOrganismCount; ++i) {
+        int type = rand() % 13;
+        switch (type) {
+            case 0: world->addOrganismRandomly(new CyberSheep(world, 0, 0)); break;
+            case 1: world->addOrganismRandomly(new SosnowskyHogweed(world, 0, 0)); break;
+            case 2: world->addOrganismRandomly(new Wolf(world, 0, 0)); break;
+            case 3: world->addOrganismRandomly(new Sheep(world, 0, 0)); break;
+            case 4: world->addOrganismRandomly(new Fox(world, 0, 0)); break;
+            case 5: world->addOrganismRandomly(new Turtle(world, 0, 0)); break;
+            case 6: world->addOrganismRandomly(new Antelope(world, 0, 0)); break;
+            case 7: world->addOrganismRandomly(new Grass(world, 0, 0)); break;
+            case 8: world->addOrganismRandomly(new Dandelion(world, 0, 0)); break;
+            case 9: world->addOrganismRandomly(new Guarana(world, 0, 0)); break;
+            case 10: world->addOrganismRandomly(new Belladonna(world, 0, 0)); break;
+            default: break;
+        }
     }
 }
 
 int main() {
     srand(time(nullptr));
-    auto world = World(60, 40);
+    int width, height;
+    cout << "Enter world width: ";
+    cin >> width;
+    cout << "Enter world height: ";
+    cin >> height;
+
+    auto world = World(width, height);
     int round = 0;
 
     auto player = new Human(&world, 0, 0);
@@ -60,7 +71,7 @@ int main() {
         printf("Player alive: %s | ", world.isOrganismAlive(player) ? "true" : "false");
         printf("Player Strength: %d | Turn: %d\n", player->getStrength(), round);
         printf("%s\n", player->getAbilityStatus().c_str());
-        printf("Move (w/a/s/d), activate ability (p), or quit (q): ");
+        printf("Move (w/a/s/d), activate ability (p), next round (n) or quit (q): ");
 
         const char input = get_char();
         auto move = PlayerMove::NONE;
@@ -75,6 +86,8 @@ int main() {
             case 'd': move = PlayerMove::RIGHT;
                 break;
             case 'p': move = PlayerMove::ABILITY;
+                break;
+            case 'n': move = PlayerMove::NEXT_ROUND;
                 break;
             case 'q': return 0;
             default: break;

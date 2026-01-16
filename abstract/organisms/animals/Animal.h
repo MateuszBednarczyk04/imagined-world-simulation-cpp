@@ -13,9 +13,6 @@ class World; // Forward declaration
 class Plant; // Forward declaration
 
 class Animal : public Organism {
-protected:
-    bool attackerAfterReflectionCantMove = false;
-
 public:
     Animal(World *world, int strength, const std::string &asciiRepresentation, int x, int y, int initiative, int age)
         : Organism(world, strength, asciiRepresentation, x, y, initiative, age) {
@@ -24,10 +21,6 @@ public:
     void action() override;
 
     void solveCollision(Organism *other) override;
-
-    bool getAttackerAfterReflectionCantMove() const {
-        return this->attackerAfterReflectionCantMove;
-    }
 };
 
 #endif //UNTITLED_ANIMAL_H

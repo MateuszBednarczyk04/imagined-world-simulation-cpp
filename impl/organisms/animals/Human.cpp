@@ -24,6 +24,8 @@ void Human::action() {
         case PlayerMove::ABILITY:
             activateAbility();
             return;
+        case PlayerMove::NEXT_ROUND:
+            return;
         case PlayerMove::NONE:
         default:
             return;
