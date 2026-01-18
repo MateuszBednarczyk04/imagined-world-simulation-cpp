@@ -5,7 +5,7 @@
 #include "organisms/animals/Antelope.h"
 #include "../../../abstract/World.h"
 
-const int chanceOfAttackReflection = 2; // 50%
+constexpr int chanceOfAttackReflection = 2;
 
 void Antelope::action() {
     int dx = 0;

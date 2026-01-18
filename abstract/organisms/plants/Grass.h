@@ -15,6 +15,7 @@ public:
 
     void action() override;
     void createChild(int x, int y) override;
+    string getType() const override { return "Grass"; }
 };
 
 #endif //UNTITLED_GRASS_H

@@ -14,6 +14,7 @@ public:
     }
 
     void createChild(int x, int y) override;
+    string getType() const override { return "Sheep"; }
 };
 
 #endif //UNTITLED_SHEEP_H

@@ -16,6 +16,7 @@ public:
     void action() override;
     void solveCollision(Organism *other) override;
     void createChild(int x, int y) override;
+    string getType() const override { return "SosnowskyHogweed"; }
 };
 
 #endif //UNTITLED_SOSNOWSKYHOGWEED_H

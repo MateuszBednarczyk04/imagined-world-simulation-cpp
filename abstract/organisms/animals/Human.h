@@ -25,6 +25,7 @@ public:
     void activateAbility();
     std::string getAbilityStatus() const;
     void advanceTurn();
+    string getType() const override { return "Human"; }
 };
 
 #endif //UNTITLED_HUMAN_H

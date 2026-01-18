@@ -47,6 +47,7 @@ void Human::solveCollision(Organism *other) {
     if (abilityDuration > 0 && other->getStrength() > this->getStrength()) {
         if (int newX, newY; world->findFreeAdjacentSpot(this->getX(), this->getY(), newX, newY)) {
             world->moveOrganism(this, newX, newY);
+            world->addLog("Human used Immortality to escape attack from " + other->getType());
         }
         return;
     }
@@ -57,6 +58,7 @@ bool Human::didReflectAttack(Organism *attacker) {
     if (abilityDuration > 0 && attacker->getStrength() > this->getStrength()) {
         if (int newX, newY; world->findFreeAdjacentSpot(this->getX(), this->getY(), newX, newY)) {
             world->moveOrganism(this, newX, newY);
+            world->addLog("Human used Immortality to dodge attack from " + attacker->getType());
         }
         return true;
     }
@@ -71,6 +73,7 @@ void Human::activateAbility() {
     if (abilityCooldown == 0) {
         abilityDuration = 5;
         abilityCooldown = 10; // 5 turns duration + 5 turns cooldown
+        world->addLog("Human activated Immortality!");
     }
 }
 

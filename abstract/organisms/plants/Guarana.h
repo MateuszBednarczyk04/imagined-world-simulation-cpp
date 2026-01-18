@@ -15,6 +15,7 @@ public:
 
     void solveCollision(Organism *other) override;
     void createChild(int x, int y) override;
+    string getType() const override { return "Guarana"; }
 };
 
 #endif //UNTITLED_GUARANA_H

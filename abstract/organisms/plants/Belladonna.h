@@ -15,6 +15,7 @@ public:
 
     void solveCollision(Organism *other) override;
     void createChild(int x, int y) override;
+    string getType() const override { return "Belladonna"; }
 };
 
 #endif //UNTITLED_BELLADONNA_H

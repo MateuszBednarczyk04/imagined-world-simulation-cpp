@@ -3,7 +3,7 @@
 
 #include "../Organism.h"
 
-class Organism; // Forward declaration
+class Organism;
 
 class Plant : public Organism {
 protected:

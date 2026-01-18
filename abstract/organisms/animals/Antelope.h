@@ -17,6 +17,7 @@ public:
     void solveCollision(Organism *other) override;
     bool didReflectAttack(Organism *attacker) override;
     void createChild(int x, int y) override;
+    string getType() const override { return "Antelope"; }
 };
 
 #endif //UNTITLED_ANTELOPE_H

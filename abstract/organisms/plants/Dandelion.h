@@ -15,6 +15,7 @@ public:
 
     void action() override;
     void createChild(int x, int y) override;
+    string getType() const override { return "Dandelion"; }
 };
 
 #endif //UNTITLED_DANDELION_H

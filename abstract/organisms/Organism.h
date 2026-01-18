@@ -51,6 +51,8 @@ public:
         return false;
     }
 
+    virtual string getType() const = 0;
+
     int getX() const {
         return this->x;
     }

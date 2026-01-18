@@ -10,20 +10,21 @@
 #include <random>
 #include <array>
 #include <utility>
+#include <string>
 #include "organisms/Organism.h"
 
 using namespace std;
 
-enum class PlayerMove { NONE, UP, DOWN, LEFT, RIGHT, ABILITY, NEXT_ROUND };
+enum class PlayerMove { NONE, UP, DOWN, LEFT, RIGHT, ABILITY, NEXT_ROUND, SAVE, LOAD };
 
 class World {
     int width, height;
     vector<Organism *> organisms;
-    vector<vector<Organism *> > grid; // Optimization: Grid for O(1) access
+    vector<vector<Organism *> > grid;
     PlayerMove playerMove;
+    vector<string> logs;
 
 public:
-    // --- NEW, IMPROVED STATIC CONSTANTS using std::array ---
     static const std::array<std::pair<int, int>, 4> CARDINAL_DIRECTIONS;
     static const std::array<std::pair<int, int>, 8> ALL_DIRECTIONS;
 
@@ -32,7 +33,6 @@ public:
         this->height = height;
         this->organisms = {};
         this->playerMove = PlayerMove::NONE;
-        // Initialize grid
         grid.resize(height, vector<Organism *>(width, nullptr));
     }
 
@@ -56,7 +56,7 @@ public:
 
     PlayerMove getPlayerMove() {
         PlayerMove move = this->playerMove;
-        this->playerMove = PlayerMove::NONE; // Reset after getting the move
+        this->playerMove = PlayerMove::NONE;
         return move;
     }
 
@@ -73,7 +73,6 @@ public:
         });
     }
 
-    // O(1) implementation
     Organism *getOrganismOnPosition(const int x, const int y) const {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             return nullptr;
@@ -134,6 +133,22 @@ public:
         grid[newY][newX] = organism;
         organism->setX(newX);
         organism->setY(newY);
+    }
+
+    void saveGame(const string &filename) const;
+    void loadGame(const string &filename);
+    void clearWorld();
+
+    void addLog(const string &log) {
+        logs.push_back(log);
+    }
+
+    void clearLogs() {
+        logs.clear();
+    }
+
+    const vector<string> &getLogs() const {
+        return logs;
     }
 };
 

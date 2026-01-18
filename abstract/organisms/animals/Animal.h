@@ -9,8 +9,8 @@
 #include <vector>
 #include "../Organism.h"
 
-class World; // Forward declaration
-class Plant; // Forward declaration
+class World;
+class Plant;
 
 class Animal : public Organism {
 public:

@@ -17,6 +17,7 @@ public:
     void action() override;
     bool didReflectAttack(Organism *attacker) override;
     void createChild(int x, int y) override;
+    string getType() const override { return "Turtle"; }
 };
 
 #endif //UNTITLED_TURTLE_H

@@ -4,10 +4,10 @@
 
 #include <random>
 #include <vector>
+#include <sstream>
 #include "organisms/animals/Animal.h"
 #include "World.h"
 #include "organisms/plants/Plant.h"
-#include "organisms/animals/Turtle.h"
 
 using namespace std;
 
@@ -48,8 +48,14 @@ void Animal::solveCollision(Organism *other) {
         int childX, childY;
         if (world->findFreeAdjacentSpot(this->getX(), this->getY(), childX, childY)) {
             createChild(childX, childY);
+            stringstream ss;
+            ss << getType() << " created a child at (" << childX << ", " << childY << ")";
+            world->addLog(ss.str());
         } else if (world->findFreeAdjacentSpot(other->getX(), other->getY(), childX, childY)) {
             createChild(childX, childY);
+            stringstream ss;
+            ss << getType() << " created a child at (" << childX << ", " << childY << ")";
+            world->addLog(ss.str());
         }
         return;
     }
@@ -58,6 +64,10 @@ void Animal::solveCollision(Organism *other) {
     int targetY = other->getY();
 
     if (other->didReflectAttack(this)) {
+        stringstream ss;
+        ss << other->getType() << " reflected attack from " << getType();
+        world->addLog(ss.str());
+
         if (other->getAttackerAfterReflectionCantMove()) {
             return;
         }
@@ -73,14 +83,29 @@ void Animal::solveCollision(Organism *other) {
         other->solveCollision(this);
         if (world->isOrganismAlive(this)) {
             world->moveOrganism(this, targetX, targetY);
+            stringstream ss;
+            ss << getType() << " ate " << other->getType();
+            world->addLog(ss.str());
+        } else {
+            stringstream ss;
+            ss << getType() << " died eating " << other->getType();
+            world->addLog(ss.str());
         }
         return;
     }
 
     if (this->getStrength() >= other->getStrength()) {
+        stringstream ss;
+        ss << getType() << " with strength " << this->getStrength() << " killed " << other->getType() <<
+                " with strength " << other->getStrength() << " at (" << targetX << ", " << targetY << ")";
+        world->addLog(ss.str());
         world->deleteOrganism(other);
         world->moveOrganism(this, targetX, targetY);
     } else {
+        stringstream ss;
+        ss << other->getType() << " with strength " << other->getStrength() << " killed " << getType() <<
+                " with strength " << this->getStrength() << " at (" << targetX << ", " << targetY << ")";
+        world->addLog(ss.str());
         world->deleteOrganism(this);
     }
 }
